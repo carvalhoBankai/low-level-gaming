@@ -10,7 +10,10 @@ void Game::run()
 {
     while (!WindowShouldClose())
     {
+        float dt = GetFrameTime();
+        player->update(dt);
         BeginDrawing();
+        ClearBackground({15, 10, 25, 255});
         player->draw();
         EndDrawing();
     }

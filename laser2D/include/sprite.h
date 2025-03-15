@@ -14,6 +14,7 @@ protected:
 public:
     Sprite(Texture2D texture, Vector2 position, Vector2 direction, int speed);
     virtual ~Sprite();
-    virtual void update(int dt);
+    virtual void update(float dt);
     virtual void draw();
+    void move(float dt);
 };
