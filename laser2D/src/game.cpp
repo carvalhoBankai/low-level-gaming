@@ -1,4 +1,5 @@
 #include "game.h"
+#include <stdio.h>
 
 Game::Game()
 {

@@ -9,6 +9,7 @@ protected:
     Texture2D texture;
     Vector2 position;
     Vector2 direction;
+    Vector2 size;
     int speed;
 
 public:

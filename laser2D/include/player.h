@@ -10,4 +10,5 @@ public:
     void update(float dt) override;
     void draw() override;
     void input();
+    void constraint();
 };
