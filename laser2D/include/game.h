@@ -10,11 +10,12 @@ private:
    std::vector<std::pair<Vector2, float>> starData;
    Texture2D starTexture;
    void generateStartData();
+   void drawStar();
+   void update();
+   void draw();
+   
 public:
    Game();
    ~Game();
    void run();
-   void drawStar();
-   void update();
-   void draw();
 };
