@@ -1,7 +1,7 @@
 #include "sprite.h"
 #include <stdio.h>
 
-Sprite::Sprite(Texture2D texture, Vector2 position, Vector2 direction, int speed):texture(texture),position(position),direction(direction),speed(speed)
+Sprite::Sprite(Texture2D texture, Vector2 position, Vector2 direction, int speed) : texture(texture), position(position), direction(direction), speed(speed)
 {
     size = {(float)texture.width, (float)texture.height};
 }
@@ -13,12 +13,12 @@ Sprite::~Sprite()
 
 void Sprite::draw()
 {
-
+    DrawTextureV(texture, position, WHITE);
 }
 
 void Sprite::update(float dt)
 {
-
+    move(dt);
 }
 
 void Sprite::move(float dt)
