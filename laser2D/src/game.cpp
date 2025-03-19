@@ -6,8 +6,10 @@ Game::Game()
 {
     InitWindow(GameSettings::WINDOW_WIDTH, GameSettings::WINDOW_HEIGHT, "Space ship");
     generateStartData();
-    player = new Player(LoadTexture("images/spaceship.png"), Vector2{GameSettings::WINDOW_WIDTH / 2, GameSettings::WINDOW_HEIGHT / 2});
     starTexture = LoadTexture("images/star.png");
+    laserTexture = LoadTexture("images/laser.png");
+    player = new Player(LoadTexture("images/spaceship.png"), Vector2{GameSettings::WINDOW_WIDTH / 2, GameSettings::WINDOW_HEIGHT / 2}, [&](const Vector2 &position)
+                        { lasers.push_back(new Laser(laserTexture, position)); });
 }
 
 void Game::generateStartData()
@@ -32,14 +34,22 @@ void Game::update()
 {
     float dt = GetFrameTime();
     player->update(dt);
+    for (const auto &laser : lasers)
+    {
+        laser->update(dt);
+    }
 }
 
 void Game::draw()
 {
     BeginDrawing();
-        ClearBackground({15, 10, 25, 255});
-        drawStar();
-        player->draw();
+    ClearBackground({15, 10, 25, 255});
+    drawStar();
+    player->draw();
+    for (const auto &laser : lasers)
+    {
+        laser->draw();
+    }
     EndDrawing();
 }
 
@@ -57,4 +67,8 @@ Game::~Game()
 {
     UnloadTexture(starTexture);
     delete player;
+    for (const auto &laser : lasers)
+    {
+        delete laser;
+    }
 }
