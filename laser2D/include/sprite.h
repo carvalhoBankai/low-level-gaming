@@ -17,5 +17,6 @@ public:
     virtual ~Sprite();
     virtual void update(float dt);
     virtual void draw();
+    virtual bool canBeDiscarded();
     void move(float dt);
 };

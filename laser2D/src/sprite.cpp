@@ -8,7 +8,6 @@ Sprite::Sprite(Texture2D texture, Vector2 position, Vector2 direction, int speed
 
 Sprite::~Sprite()
 {
-    UnloadTexture(texture);
 }
 
 void Sprite::draw()
@@ -25,4 +24,9 @@ void Sprite::move(float dt)
 {
     position.x += direction.x * speed * dt;
     position.y += direction.y * speed * dt;
+}
+
+bool Sprite::canBeDiscarded()
+{
+    return position.y <= -300 || position.y >= GameSettings::WINDOW_HEIGHT + 300;
 }

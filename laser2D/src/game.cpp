@@ -5,11 +5,15 @@
 Game::Game()
 {
     InitWindow(GameSettings::WINDOW_WIDTH, GameSettings::WINDOW_HEIGHT, "Space ship");
+    InitAudioDevice();
     generateStartData();
+    playerTexture = LoadTexture("images/spaceship.png");
     starTexture = LoadTexture("images/star.png");
     laserTexture = LoadTexture("images/laser.png");
-    player = new Player(LoadTexture("images/spaceship.png"), Vector2{GameSettings::WINDOW_WIDTH / 2, GameSettings::WINDOW_HEIGHT / 2}, [&](const Vector2 &position)
-                        { lasers.push_back(new Laser(laserTexture, position)); });
+    laserSound = LoadSound("audio/laser.wav");
+    player = new Player(playerTexture, Vector2{GameSettings::WINDOW_WIDTH / 2, GameSettings::WINDOW_HEIGHT / 2}, [&](const Vector2 &position)
+                        { lasers.push_back(new Laser(laserTexture, position)); 
+                          PlaySound(laserSound); });
 }
 
 void Game::generateStartData()
@@ -34,6 +38,7 @@ void Game::update()
 {
     float dt = GetFrameTime();
     player->update(dt);
+    discardSprites();
     for (const auto &laser : lasers)
     {
         laser->update(dt);
@@ -67,8 +72,28 @@ Game::~Game()
 {
     UnloadTexture(starTexture);
     delete player;
+    UnloadTexture(playerTexture);
     for (const auto &laser : lasers)
     {
         delete laser;
+    }
+    UnloadTexture(laserTexture);
+    UnloadSound(laserSound);
+    CloseAudioDevice();
+}
+
+void Game::discardSprites()
+{
+    for (auto it = lasers.begin(); it != lasers.end();)
+    {
+        if ((*it)->canBeDiscarded())
+        {
+            delete *it;            // Delete the laser object
+            it = lasers.erase(it); // Erase the laser from the vector and get the next iterator
+        }
+        else
+        {
+            ++it; // Move to the next element if it wasn't discarded
+        }
     }
 }

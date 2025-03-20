@@ -12,10 +12,13 @@ private:
    std::vector<Laser*> lasers;
    Texture2D starTexture;
    Texture2D laserTexture;
+   Texture2D playerTexture;
+   Sound laserSound;
    void generateStartData();
    void drawStar();
    void update();
    void draw();
+   void discardSprites();
    
 public:
    Game();

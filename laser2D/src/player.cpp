@@ -37,3 +37,8 @@ void Player::constraint()
     position.x = max((float)0, min(position.x, (float)GameSettings::WINDOW_WIDTH - size.x));
     position.y = max((float)0, min((float)position.y, (float)GameSettings::WINDOW_HEIGHT - size.y));
 }
+
+Player::~Player()
+{
+    
+}
