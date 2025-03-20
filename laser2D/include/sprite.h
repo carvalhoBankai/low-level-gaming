@@ -13,6 +13,7 @@ protected:
     int speed;
 
 public:
+    Sprite();
     Sprite(Texture2D texture, Vector2 position, Vector2 direction, int speed);
     virtual ~Sprite();
     virtual void update(float dt);

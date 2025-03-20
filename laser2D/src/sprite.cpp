@@ -1,14 +1,16 @@
 #include "sprite.h"
 #include <stdio.h>
 
+Sprite::~Sprite()
+{
+}
+
 Sprite::Sprite(Texture2D texture, Vector2 position, Vector2 direction, int speed) : texture(texture), position(position), direction(direction), speed(speed)
 {
     size = {(float)texture.width, (float)texture.height};
 }
 
-Sprite::~Sprite()
-{
-}
+Sprite::Sprite() : texture{}, position{}, direction{}, speed{}, size{}{}
 
 void Sprite::draw()
 {

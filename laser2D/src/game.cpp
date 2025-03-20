@@ -11,10 +11,11 @@ Game::Game()
     starTexture = LoadTexture("images/star.png");
     laserTexture = LoadTexture("images/laser.png");
     laserSound = LoadSound("audio/laser.wav");
+    meteorTexture = LoadTexture("images/meteor.png");
     player = new Player(playerTexture, Vector2{GameSettings::WINDOW_WIDTH / 2, GameSettings::WINDOW_HEIGHT / 2}, [&](const Vector2 &position)
                         { lasers.push_back(new Laser(laserTexture, position)); 
                           PlaySound(laserSound); });
-    meteorTimer = Timer(0.4, true, true, nullptr);
+    meteorTimer = Timer(0.4, true, true, [&](){meteors.push_back(new Meteor(meteorTexture));});
 }
 
 void Game::generateStartData()
@@ -45,6 +46,11 @@ void Game::update()
     {
         laser->update(dt);
     }
+
+    for (const auto &meteor : meteors)
+    {
+        meteor->update(dt);
+    }
 }
 
 void Game::draw()
@@ -56,6 +62,11 @@ void Game::draw()
     for (const auto &laser : lasers)
     {
         laser->draw();
+    }
+
+    for (const auto &meteor : meteors)
+    {
+        meteor->draw();
     }
     EndDrawing();
 }
@@ -79,6 +90,13 @@ Game::~Game()
     {
         delete laser;
     }
+
+    for (const auto &meteor : meteors)
+    {
+        delete meteor;
+    }
+    
+    UnloadTexture(meteorTexture);
     UnloadTexture(laserTexture);
     UnloadSound(laserSound);
     CloseAudioDevice();
@@ -92,6 +110,19 @@ void Game::discardSprites()
         {
             delete *it;            // Delete the laser object
             it = lasers.erase(it); // Erase the laser from the vector and get the next iterator
+        }
+        else
+        {
+            ++it; // Move to the next element if it wasn't discarded
+        }
+    }
+
+    for (auto it = meteors.begin(); it != meteors.end();)
+    {
+        if ((*it)->canBeDiscarded())
+        {
+            delete *it;            // Delete the meteor object
+            it = meteors.erase(it); // Erase the meteor from the vector and get the next iterator
         }
         else
         {

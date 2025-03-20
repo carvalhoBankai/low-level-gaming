@@ -24,6 +24,12 @@ void Timer::update()
         return;
     }
 
+    if(action)
+    {
+        printf("****** doing action *********** \n");
+        action();
+    }
+
     deactivate();
 }
 
