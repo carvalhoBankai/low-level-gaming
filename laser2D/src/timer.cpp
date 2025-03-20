@@ -1,7 +1,7 @@
 #include "timer.h"
 
 Timer::Timer(double duration, bool repeat, bool autoStart, std::function<void()> action) : duration(duration),
-                                                                                        repeat(repeat), autoStart(autoStart), action(action)
+                                                                                           repeat(repeat), autoStart(autoStart), action(action)
 {
     isActive = false;
     if (autoStart)
@@ -24,9 +24,8 @@ void Timer::update()
         return;
     }
 
-    if(action)
+    if (action)
     {
-        printf("****** doing action *********** \n");
         action();
     }
 
@@ -37,7 +36,6 @@ void Timer::activate()
 {
     isActive = true;
     startTime = GetTime();
-    printf("***** activating timer *********\n");
 }
 
 void Timer::deactivate()
