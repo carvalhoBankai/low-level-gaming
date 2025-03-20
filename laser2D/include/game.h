@@ -4,6 +4,8 @@
 #include "player.h"
 #include <vector>
 #include "laser.h"
+#include "timer.h"
+
 class Game
 {
 private:
@@ -14,6 +16,7 @@ private:
    Texture2D laserTexture;
    Texture2D playerTexture;
    Sound laserSound;
+   Timer meteorTimer;
    void generateStartData();
    void drawStar();
    void update();

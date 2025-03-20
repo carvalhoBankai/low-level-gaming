@@ -14,6 +14,7 @@ Game::Game()
     player = new Player(playerTexture, Vector2{GameSettings::WINDOW_WIDTH / 2, GameSettings::WINDOW_HEIGHT / 2}, [&](const Vector2 &position)
                         { lasers.push_back(new Laser(laserTexture, position)); 
                           PlaySound(laserSound); });
+    meteorTimer = Timer(0.4, true, true, nullptr);
 }
 
 void Game::generateStartData()
@@ -38,6 +39,7 @@ void Game::update()
 {
     float dt = GetFrameTime();
     player->update(dt);
+    meteorTimer.update();
     discardSprites();
     for (const auto &laser : lasers)
     {
